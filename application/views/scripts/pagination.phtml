@@ -1,0 +1,45 @@
+<?php 
+
+	if(isset($this->previous))
+	{
+		echo '<a href="'.$this->url(array('page'=>$this->first)).'">First</a>'. '  ';	
+	}
+	else
+	{
+		echo 'First   ';
+	}
+
+if(isset($this->previous))
+	{
+		echo '<a href="'.$this->url(array('page'=>$this->previous)).'">&lt; Previous</a> ';	
+	}
+
+	foreach($this->pagesInRange as $page) 
+	
+
+{
+
+	if($this->current!= $page)
+	{
+		echo '<a href="'.$this->url(array('page'=>$page)).'">'.$page.'</a>'. ' | ';	
+	}
+	 else
+		{
+			echo $page.' | ';
+		}
+}
+
+if(isset($this->next))
+	{
+		echo '<a href="'.$this->url(array('page'=>$this->next)).'">Next &gt</a> ';	
+	}
+
+if(isset($this->next))
+	{
+		echo '<a href="'.$this->url(array('page'=>$this->last)).'">End</a>';	
+	}
+	 else
+	{
+		echo 'End   ';
+	}
+?>

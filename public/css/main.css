@@ -1,0 +1,16 @@
+
+#header {
+
+	width: auto;
+	height: 100px;
+}
+
+#templates {
+
+	background: #FFCC99;
+	width:35%;
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	border-radius: 3px;
+	padding: 5px;
+}

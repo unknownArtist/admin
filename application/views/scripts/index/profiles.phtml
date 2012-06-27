@@ -1,0 +1,35 @@
+<form action="profiles" method="post">
+	<label>Search by email</label>
+	<input type="email" id="email" name="email" value="" placeholder="johndoe@example.com" required="required" /> 
+	<br />
+	 <input type="submit" value="Search" id="submit-button" />  
+</form>
+
+<?php 
+		
+	foreach ($this->listProfiles as $profiles):
+		
+		echo $profiles['user_id']."<br />";
+		echo $profiles['name']."<br />";
+		echo $profiles['email']."<br />";
+		echo $profiles['profile_created_on'];
+		
+		
+?>
+	 <a id="editprofile" href="<?php echo $this->Url(
+	 	array(
+	 		'controller' =>  'index',
+	 		'action'     =>  'edit',
+	 		'id'	     =>   $profiles['user_id'],
+	 		)); ?>">Edit User</a><br />
+	  <a id="editprofile" href="<?php echo $this->url(array('controller' =>  'index',
+	  'action'  => 'reset-password', 'id'	=> $profiles['user_id'])); ?>">Reset Password</a><br /><br /><br />
+
+
+<?php endforeach; ?>
+	
+
+	<?php echo $this->form; ?>
+<?php  echo $this->paginationControl($this->listProfiles, 'Sliding', 'pagination.phtml'); ?>
+
+<div class="result"> </div>

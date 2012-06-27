@@ -1,0 +1,34 @@
+<script src="<?php echo $this->baseUrl('../js/jscripts/tiny_mce/tiny_mce.js'); ?>" language="javascript" type="text/javascript"></script>
+<script type="text/javascript">
+tinyMCE.init({
+        mode : "textareas",
+        theme : "advanced",
+        
+});
+</script>
+<?php 
+
+	   foreach ($this->form1 as $value):
+	   	echo "<div id='templates'>";
+	    echo $value->subject."<br />";
+	    echo "</div>";
+	    echo "<br />";
+	   echo "<div id='templates'>";
+
+	   	echo $value->template;
+
+	   	echo "<a href='".$this->Url(array('controller' => 'index', 'action' => 'edit-template', 'sno' => $value['sno']))."'>Edit</a>"."<br />";
+	   	echo "<a href='".$this->Url(array('controller' => 'index', 'action' => 'delete-template', 'sno' => $value['sno']))."'>Delete</a>";
+	    echo "<br />";
+	    echo "<a href='".$this->Url(array('controller' => 'index', 'action' => 'get-emails', 'sno' => $value['sno']))."'>  Send</a>";
+	    echo "</div>";
+	    echo "<br />";
+	   endforeach;
+?>
+<?php echo $this->form; ?>
+<?php 
+	if(isset($this->success))
+	{
+		echo $this->success;
+	}
+?>

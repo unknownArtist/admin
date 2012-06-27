@@ -1,0 +1,54 @@
+
+<link rel="stylesheet" type="text/css" href="<?php echo $this->baseUrl('../css/main.css'); ?>" />
+
+<div id="header">
+	
+		<?php if(Zend_Auth::getInstance()->hasIdentity()): ?>
+		 <a id="editprofile" href="
+
+			<?php echo $this->url(
+
+			 array(
+			'controller' =>  'index',
+	  		'action'  => 'profiles',
+
+	  		)); ?>
+
+	  ">profiles</a>
+	<?php endif; ?>
+	
+
+
+
+	
+		<?php if(Zend_Auth::getInstance()->hasIdentity()): ?>
+		 <a id="editprofile" href="
+
+			<?php echo $this->url(
+
+			 array(
+			'controller' =>  'index',
+	  		'action'  => 'add-template',
+
+	  		)); ?>
+
+	  ">Templates</a>
+	<?php endif; ?>
+
+
+
+		<?php if(Zend_Auth::getInstance()->hasIdentity()): ?>
+		 <a id="editprofile" href="
+
+			<?php echo $this->url(
+
+			 array(
+			'controller' =>  'index',
+	  		'action'  => 'news-letter',
+
+	  		)); ?>
+
+	  ">NewsLetter</a>
+	<?php endif; ?>
+	
+</div>
