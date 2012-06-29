@@ -63,6 +63,28 @@
 	  		)); ?>
 
 	  ">inviteFriend</a>
+
+
+	<?php endif; ?>
+		<?php if(Zend_Auth::getInstance()->hasIdentity()): ?>
+
+		 <a id="deleteme" href="<?php echo $this->Url(
+                            array(
+                            'controller' =>  'index',
+                            'action'     =>  'members',
+                            'id'         =>   '1',
+                            )); ?>">Active Members</a>
+
+	<?php endif; ?>
+
+		<?php if(Zend_Auth::getInstance()->hasIdentity()): ?>
+
+		 <a id="deleteme" href="<?php echo $this->Url(
+                            array(
+                            'controller' =>  'index',
+                            'action'     =>  'members',
+                            'id'         =>   '0',
+                            )); ?>">inactive Members</a>
 	<?php endif; ?>
 	
 </div>

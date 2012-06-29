@@ -1,0 +1,39 @@
+<?php echo "============================================================================";?><br />
+
+<?php foreach($this->activeMembers as $t): ?>
+  <?php echo "f_name = ". $t['f_name'];?>
+  <?php echo "l_name = ".$t['l_name'];?>
+  <?php echo "email = ". $t['email'];?>
+  <?php 
+    if($t['activate']==0)
+    {
+     ?>
+  <a id="editprofile" href="<?php echo $this->Url(
+                            array(
+                            'controller' =>  'index',
+                            'action'     =>  'activate',
+                            'id'         =>   $t['id'],
+                            )); ?>">Activate</a>
+  <?php
+
+    }
+  ?>
+
+  <?php 
+    if($t['activate']==1)
+    {
+     ?>
+  <a id="editprofile" href="<?php echo $this->Url(
+                            array(
+                            'controller' =>  'index',
+                            'action'     =>  'deactivate',
+                            'id'         =>   $t['id'],
+                            )); ?>">Deactivate</a>
+  <?php
+
+    }
+  ?>
+
+<br /><?php echo "---------------------------------------------------------------------------------------------------";?><br />
+
+<?php endforeach; ?>

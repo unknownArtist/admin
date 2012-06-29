@@ -534,65 +534,132 @@ class IndexController extends Zend_Controller_Action
               $emailTo = $form->getValue('email');
               $messageData = $form->getValue('Message');
 
-            // require_once "Swift/lib/swift_required.php";
-            // $transport = Swift_SmtpTransport::newInstance()
-            //             ->setHost('mail.petmatchup.com')
-            //             //->setEncryption('ssl')
-            //             ->setPort(465)
-            //             ->setUsername('petmatchup@petmatchup.com')
-            //             ->setPassword('petpet321');
+            require_once "Swift/lib/swift_required.php";
+            $transport = Swift_SmtpTransport::newInstance()
+                        ->setHost('mail.petmatchup.com')
+                        ->setEncryption('ssl')
+                        ->setPort(465)
+                        ->setUsername('petmatchup@petmatchup.com')
+                        ->setPassword('petpet321');
  
-            //             //Create mailer
-            //             $mailer = Swift_Mailer::newInstance($transport);
+                        //Create mailer
+                        $mailer = Swift_Mailer::newInstance($transport);
                               
-            //             //Create the message
-            //             $message = Swift_Message::newInstance()
-            //                 ->setSubject('Petmatchup')
-            //                 ->setFrom(array('petmatchup@petmatchup.com' => 'Petmatchup'))
-            //                 ->setTo($email)
-            //                 ->setBody($messageData, 'text/html');
+                        //Create the message
+                        $message = Swift_Message::newInstance()
+                            ->setSubject('Petmatchup')
+                            ->setFrom(array('petmatchup@petmatchup.com' => 'Petmatchup'))
+                            ->setTo($emailTo)
+                            ->setBody($messageData, 'text/html');
 
-            //             //Send the message
-            //             $mailer->send($message);
+                        //Send the message
+                        $mailer->send($message);
 
-            //   echo "Message sent successfully........";
+                        echo "Message sent successfully........";
 ///////////////////////////////////////////////////////////////////////////////////////////////
-                            $smtpServer = 'mail.petmatchup.com';
-                            $username = 'petmatchup@petmatchup.com';
-                            $Password = 'petpet321';
-                            $config = array(
-                                            //'ssl' => 'ssl',
-                                            'auth' => 'login',
-                                            'username' => $username,
-                                            'password' => $Password,
-                                            'port' => 465
-                                            );
-                            $transport = new Zend_Mail_Transport_Smtp($smtpServer, $config);
-                            Zend_Mail::setDefaultTransport($transport);
-                            $message = '
+                            // $smtpServer = 'mail.petmatchup.com';
+                            // $username = 'petmatchup@petmatchup.com';
+                            // $Password = 'petpet321';
+                            // $config = array(
+                            //                 'ssl' => 'ssl',
+                            //                 'auth' => 'login',
+                            //                 'username' => $username,
+                            //                 'password' => $Password,
+                            //                 'port' => 465
+                            //                 );
+                            // $transport = new Zend_Mail_Transport_Smtp($smtpServer, $config);
+                            // Zend_Mail::setDefaultTransport($transport);
+                            // $message = '
 
-                                    '.$messageData.'
+                            //         '.$messageData.'
                                     
-                                    http://www.petchmatchup.com
+                            //         http://www.petchmatchup.com
 
-                                    ';
-                            $mail = new Zend_Mail();
-                            $mail->addTo($emailTo, 'Admin');
-                            $mail->setSubject('You have been invited to petmatchup!');
-                            $mail->setBodyText($message);
-                            $mail->setFrom('petmatchup@petmatchup.com', 'petmatchup');
-                            $mail->send($transport);  
+                            //         ';
+                            // $mail = new Zend_Mail();
+                            // $mail->addTo($emailTo, 'Admin');
+                            // $mail->setSubject('You have been invited to petmatchup!');
+                            // $mail->setBodyText($message);
+                            // $mail->setFrom('petmatchup@petmatchup.com', 'petmatchup');
+                            // $mail->send($transport);  
+                            // echo "Message sent successfully........";
 
-
-
-
-
-
+                      }
+                    }
             }
+
+        public function membersAction()
+        {
+
+          // if($this->_request->getParam('id')==1)
+          // {
+          
+          $tmp = new Application_Model_Users();
+          $where = "activate = ".$this->_request->getParam('id');
+          $data = $tmp->fetchAll($where)->toArray();
+          $this->view->activeMembers = $data;
+
+          // }
+
+          // if($this->_request->getParam('id')==0)
+          // {
+          
+          // $tmp = new Application_Model_Users();
+          // $where = "activate = ".$this->_request->getParam('id');
+          // $data = $tmp->fetchAll($where)->toArray();
+          // $this->view->activeMembers = $data;
+
+          // }
+        }
+
+          public function activateAction()
+          {
+             $data = array(
+                        'activate'     => '1'               
+                );
+
+            $tmp = new Application_Model_Users();
+            $where = "id = ".$this->_request->getParam('id');
+
+            $tmp->update($data,$where);
+                    
+            $this->view->msg = "profile updated";
+            $this->_redirect('index/members/id/0');
+
+
+            //$data = $tmp->fetchRow($where)->toArray();
+
 
           }
 
+          public function deactivateAction()
+          {
+             $data = array(
+                        'activate'     => '0'               
+                );
 
-        }
+            $tmp = new Application_Model_Users();
+            $where = "id = ".$this->_request->getParam('id');
+
+            $tmp->update($data,$where);
+                    
+            $this->view->msg = "profile updated";
+            $this->_redirect('index/members/id/1');
+
+
+            //$data = $tmp->fetchRow($where)->toArray();
+
+
+          }
+
+          
+
+        
+
+
+          
+
+
+        
 
  }
