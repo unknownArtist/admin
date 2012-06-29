@@ -452,7 +452,7 @@ class IndexController extends Zend_Controller_Action
 
         }
 
-         private function sendmailto()
+        private function sendmailto()
          {
 
           $setEmails     = new Application_Model_SendEmail();
@@ -519,5 +519,80 @@ class IndexController extends Zend_Controller_Action
             }
 
           }
+
+        public function inviteFriendAction()
+        {
+          $form = new Application_Form_inviteFriend();
+          $this->view->invitefrnd = $form;
+
+         if($this->getRequest()->isPost())
+         {
+            $formData = $this->getRequest()->getPost();
+
+            if($form->isValid($formData))
+            {
+              $emailTo = $form->getValue('email');
+              $messageData = $form->getValue('Message');
+
+            // require_once "Swift/lib/swift_required.php";
+            // $transport = Swift_SmtpTransport::newInstance()
+            //             ->setHost('mail.petmatchup.com')
+            //             //->setEncryption('ssl')
+            //             ->setPort(465)
+            //             ->setUsername('petmatchup@petmatchup.com')
+            //             ->setPassword('petpet321');
+ 
+            //             //Create mailer
+            //             $mailer = Swift_Mailer::newInstance($transport);
+                              
+            //             //Create the message
+            //             $message = Swift_Message::newInstance()
+            //                 ->setSubject('Petmatchup')
+            //                 ->setFrom(array('petmatchup@petmatchup.com' => 'Petmatchup'))
+            //                 ->setTo($email)
+            //                 ->setBody($messageData, 'text/html');
+
+            //             //Send the message
+            //             $mailer->send($message);
+
+            //   echo "Message sent successfully........";
+///////////////////////////////////////////////////////////////////////////////////////////////
+                            $smtpServer = 'mail.petmatchup.com';
+                            $username = 'petmatchup@petmatchup.com';
+                            $Password = 'petpet321';
+                            $config = array(
+                                            //'ssl' => 'ssl',
+                                            'auth' => 'login',
+                                            'username' => $username,
+                                            'password' => $Password,
+                                            'port' => 465
+                                            );
+                            $transport = new Zend_Mail_Transport_Smtp($smtpServer, $config);
+                            Zend_Mail::setDefaultTransport($transport);
+                            $message = '
+
+                                    '.$messageData.'
+                                    
+                                    http://www.petchmatchup.com
+
+                                    ';
+                            $mail = new Zend_Mail();
+                            $mail->addTo($emailTo, 'Admin');
+                            $mail->setSubject('You have been invited to petmatchup!');
+                            $mail->setBodyText($message);
+                            $mail->setFrom('petmatchup@petmatchup.com', 'petmatchup');
+                            $mail->send($transport);  
+
+
+
+
+
+
+            }
+
+          }
+
+
+        }
 
  }
