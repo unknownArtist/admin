@@ -597,19 +597,17 @@ class IndexController extends Zend_Controller_Action
           $tmp = new Application_Model_Users();
           $where = "activate = ".$this->_request->getParam('id');
           $data = $tmp->fetchAll($where)->toArray();
-          $this->view->activeMembers = $data;
+          //$this->view->activeMembers = $data;
 
-          // }
+          //-------Pagination------------
+          $page=$this->_getParam('page',1);
+          $paginator = Zend_Paginator::factory($data);
+          $paginator->setItemCountPerPage(8);
+          $paginator->setCurrentPageNumber($page);
+          $this->view->activeMembers=$paginator;
+          //-------end of pagination-------
 
-          // if($this->_request->getParam('id')==0)
-          // {
-          
-          // $tmp = new Application_Model_Users();
-          // $where = "activate = ".$this->_request->getParam('id');
-          // $data = $tmp->fetchAll($where)->toArray();
-          // $this->view->activeMembers = $data;
 
-          // }
         }
 
           public function activateAction()
